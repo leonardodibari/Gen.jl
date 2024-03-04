@@ -2,7 +2,7 @@
 
 julia_version = "1.10.0"
 manifest_format = "2.0"
-project_hash = "870688dc4a7e42f3c5322919d27acd922fe94b1c"
+project_hash = "a535d7a3c5ca0a9998907094e3fc13ab3b3fcbe3"
 
 [[deps.ArgTools]]
 uuid = "0dad84c5-d112-42e6-8d28-ef12dabb789f"
@@ -239,6 +239,12 @@ git-tree-sha1 = "acc357fd78405a0bc52413b0b97f4a47d5e648e3"
 uuid = "a0c94c4b-ebed-5953-b5fc-82fe598ac79f"
 version = "1.0.2"
 
+[[deps.FileIO]]
+deps = ["Pkg", "Requires", "UUIDs"]
+git-tree-sha1 = "c5c28c245101bd59154f649e19b038d15901b5dc"
+uuid = "5789e2e9-d7fb-5bc7-8068-2c6fae9b9549"
+version = "1.16.2"
+
 [[deps.FilePathsBase]]
 deps = ["Compat", "Dates", "Mmap", "Printf", "Test", "UUIDs"]
 git-tree-sha1 = "9f00e42f8d99fdde64d40c8ea5d14269a2e2c1aa"
@@ -389,6 +395,12 @@ version = "0.2.2"
 git-tree-sha1 = "a3f24677c21f5bbe9d2a714f95dcd58337fb2856"
 uuid = "82899510-4779-5014-852e-03e436cf321d"
 version = "1.0.0"
+
+[[deps.JLD2]]
+deps = ["FileIO", "MacroTools", "Mmap", "OrderedCollections", "Pkg", "PrecompileTools", "Printf", "Reexport", "Requires", "TranscodingStreams", "UUIDs"]
+git-tree-sha1 = "5ea6acdd53a51d897672edb694e3cc2912f3f8a7"
+uuid = "033835bb-8acc-5ee8-8aae-3f567f8a3819"
+version = "0.4.46"
 
 [[deps.JLFzf]]
 deps = ["Pipe", "REPL", "Random", "fzf_jll"]
