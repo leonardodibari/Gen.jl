@@ -1,4 +1,6 @@
-#export fasta2matrix, map_gaps, read_par_BM
+#export fasta2matrix, map_gaps, read_par_BM, read_par_BM_LR
+
+
 
 
 """
@@ -85,7 +87,30 @@ let alphabet = [ 1, 21, 2, 3, 4, 5, 6, 7, 8, 21, 9, 10, 11, 12, 21, 13, 14, 15, 
      end
 end
 
-
+function read_par_BM_standardorder(path::AbstractString, q::Integer = 21)
+    params = readdlm(path,' ', use_mmap = true)[:, 2:6]
+    l_file = size(params, 1)
+    N = Integer(((q - 2) + sqrt( (q-2)^2 + 8*l_file))/(2*q))
+    J = Array{Float64}(undef, q, q, N, N)
+    h = Array{Float64}(undef, q, N)
+    n_J = Int(q*q*N*(N-1)/2)
+    n_h = q*N
+    for k in 1:n_J
+        i, j, a, b, par_j = params[k, :]
+        i += 1
+        j += 1
+        a += 1
+        b += 1
+        J[a, b, i, j] = par_j
+    end
+    for l in (n_J + 1): n_h + n_J
+        i, a, par_h = params[l, :]
+        i += 1
+        a += 1
+        h[a, i] = par_h
+    end
+    return h, J
+end
 
 """
         function map_gaps(matrix)
@@ -238,4 +263,69 @@ function simmetrize_J(J_old)
         end
     end
     return J_s
+end
+
+
+"""
+    read_DNA(file_path::AbrastractString)
+
+    Takes path of file with dna sequences and extracts a msa of dna sequences
+"""
+function read_DNA(file_path::AbstractString)
+    # Initialize an empty vector to store sequences
+    sequences = Vector{String}()
+    
+    # Read the file
+    open(file_path) do file
+        # Initialize a variable to store the current sequence
+        current_sequence = ""
+        
+        for line in eachline(file)
+            # Check if the line is empty or a header line
+            if isempty(line) || startswith(line, '>')
+                # If the current sequence is not empty, store it
+                if !isempty(current_sequence)
+                    push!(sequences, current_sequence)
+                    current_sequence = ""
+                end
+                continue
+            end
+            
+            # Add the line to the current sequence
+            current_sequence *= strip(line)
+        end
+        
+        # Store the last sequence
+        if !isempty(current_sequence)
+            push!(sequences, current_sequence)
+        end
+    end
+    
+    # Determine the maximum length of sequences
+    max_sequence_length = maximum(length.(sequences))
+    
+    # Initialize the matrix with the correct dimensions
+    sequences_matrix = fill("", length(sequences), max_sequence_length ÷ 3)
+    
+    # Split each sequence into chunks of three characters and store in the matrix
+    for (i, sequence) in enumerate(sequences)
+        for (j, chunk) in enumerate([sequence[k:k+2] for k in 1:3:length(sequence)-2])
+            sequences_matrix[i, j] = chunk
+        end
+    end
+    
+    return sequences_matrix
+end
+
+
+function build_dna_seq_steps(step_matrices::Vector{Matrix{String}})
+    seq_matrices = Matrix{String}[]
+    for i in 1:size(step_matrices[1], 1)
+        seq_matrix = Matrix{String}(undef, length(step_matrices), size(step_matrices[1], 2))
+        for j in 1:length(step_matrices)
+            seq_matrix[j, :] = step_matrices[j][i, :]
+        end
+        push!(seq_matrices, seq_matrix)
+    end
+    return seq_matrices
 end

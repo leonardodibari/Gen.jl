@@ -1,0 +1,21 @@
+VIANA BRAY
+
+a)1-2*(hamming) -> mean and variance
+b) specific heat (variance of energy/T^2 at end of simulation)
+
+aging phenomenon 
+if you take solid, equilibrate at T. More time stays at that temp, more it's stable. 
+
+in spin dynamics of mean hamming a T basse è sbrodolata
+in più se fai hamming(t, t'+t)  a T basse ho time translation invariance le curve salgono meno al crescere di t' perchè è come se io fossi già più stabile. 
+
+
+
+PHASE TRANSITION
+
+dall'asta: fai un po di medie comunque per capire il comportamento tipico
+
+
+cugliandolo: fai naive tap e vedi quando convergono, se serve aggiungi onsager term, in quel modo iterativamente potrebbero non convergere, ma bolthausen ha dato una routine di discretizzazione che risolve il problema. start from random magnetizations.
+
+

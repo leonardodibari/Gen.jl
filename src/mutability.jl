@@ -12,7 +12,7 @@ function find_positions(msa)
         
 end
 
-function get_entropy(f; q =21)
+function get_entropy(f; q = 21)
     N=length(f[1,:])
     entr = zeros(Float64, N)
     for i in 1:N
@@ -112,6 +112,22 @@ function proba_DNA_gibbs_masked(k, sites, masked_seq, h, J; q = 21, T = 1)
 		prob[i] = exp(log_proba/T)
 	end
 	return normalize(prob,1)
+    
+end
+
+function proba_DNA_gibbs_masked_no_norm(k, sites, masked_seq, h, J; q = 21, T = 1)
+	prob = zeros(q)
+	for i in 1:q
+        q_k = i
+		log_proba = h[q_k, k]
+        n = 0
+ 		for j in sites
+            n += 1
+            log_proba += J[masked_seq[n], q_k , j, k]
+        end
+		prob[i] = exp(log_proba/T)
+	end
+	return prob
     
 end
 
@@ -232,5 +248,12 @@ function CDE_masked_back(site::Int, tt::Array{Float64, 2}, nat_msa::Array{Int8,2
     savefig(filename)
     
     return res
-end   
+end 
+
+function CIE(msa; q = 21)
+    L = size(msa,2)
+    f = reshape(DCAUtils.compute_weighted_frequencies(Int8.(msa'), q+1, 0.2)[1], (q, L))
+    return get_entropy(f, q = q)
+end
+    
     
