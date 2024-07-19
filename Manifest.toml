@@ -2,7 +2,7 @@
 
 julia_version = "1.10.0"
 manifest_format = "2.0"
-project_hash = "6e126ae30f197d3670cebd6ad8961c800a5f53a0"
+project_hash = "cd033708d08605f340fe4943df3b3af094e67c90"
 
 [[deps.Accessors]]
 deps = ["CompositionsBase", "ConstructionBase", "Dates", "InverseFunctions", "LinearAlgebra", "MacroTools", "Markdown", "Test"]
@@ -80,6 +80,12 @@ deps = ["JSON", "Logging", "Printf", "Profile", "Statistics", "UUIDs"]
 git-tree-sha1 = "f1dff6729bc61f4d49e140da1af55dcd1ac97b2f"
 uuid = "6e4b80f9-dd63-53aa-95a3-0cdb28fa8baf"
 version = "1.5.0"
+
+[[deps.BinnedStatistics]]
+deps = ["Statistics"]
+git-tree-sha1 = "3a3b3b902892d2a0446c6aa9f93632c6accf5484"
+uuid = "b1065af9-dcad-4f81-8559-1003c45b126b"
+version = "0.1.0"
 
 [[deps.BitFlags]]
 git-tree-sha1 = "2dc09997850d68179b69dafb58ae806167a32b1b"
